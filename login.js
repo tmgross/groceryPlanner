@@ -11,7 +11,7 @@ function LoginScreen({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.loginScrn}>
       <Text style={styles.title}>Grocery Planner</Text>
       <View style={styles.loginContainer}>
         <View style={styles.inputRow}>
@@ -47,5 +47,9 @@ function LoginScreen({navigation}) {
     </View>
   );
 }
+// Set the screen options to remove the header
+LoginScreen.navigationOptions = {
+  headerShown: false,
+};
 
 export default LoginScreen;

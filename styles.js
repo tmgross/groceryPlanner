@@ -1,14 +1,34 @@
 // styles.js
 
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {
+  loginScrn: {
     flex: 1,
     backgroundColor: '#282c34',
     color: 'aliceblue',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  homePageScrn: {
+    flex: 1,
+    backgroundColor: '#282c34',
+    color: 'aliceblue',
+    alignItems: 'center',
+    paddingTop: 50,
+  },
+  home: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    position: 'absolute',
+    top: 20,
+  },
+  box: {
+    width: '90%',
+    height: 200,
+    backgroundColor: '#dcdcdc',
+    marginVertical: 10,
   },
   title: {
     color: 'white',
@@ -64,6 +84,20 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
+    fontWeight: 'bold',
+  },
+  logoutBtn: {
+    backgroundColor: '#ed5440',
+    padding: 10,
+    borderRadius: 5,
+    position: 'absolute',
+    top: 10,
+    left: 10,
+  },
+
+  logoutBtnTxt: {
+    color: 'white',
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
