@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import {styles} from './styles';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { styles } from './styles';
 
-function LoginScreen({navigation}) {
+function LoginScreen({ navigation }) {
   const handleLoginClick = () => {
     navigation.navigate('Home');
   };
