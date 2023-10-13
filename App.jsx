@@ -1,40 +1,21 @@
-import React from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import {styles} from './styles';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import HomeScreen from './homepage';
+import LoginScreen from './login';
 
-const App = () => {
+const Stack = createStackNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Grocery Planner</Text>
-      <View style={styles.loginContainer}>
-        <View style={styles.inputRow}>
-          <Text style={styles.loginTextBox}>Username:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your username"
-            placeholderTextColor="gray"
-          />
-        </View>
-        <View style={styles.inputRow}>
-          <Text style={styles.loginTextBox}>Password:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your password"
-            placeholderTextColor="gray"
-            secureTextEntry={true}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={[styles.loginBtn, styles.loginGoogle]}>
-            <Text style={styles.buttonText}>Login with Google</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.loginBtn, styles.loginBtnMargin]}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-};
+}
 
 export default App;
