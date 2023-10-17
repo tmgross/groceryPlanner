@@ -8,13 +8,13 @@ function InventoryScreen() {
 
   const handleLogout = () => {
     // Navigate to the "Login" screen
-    navigation.navigate('Login');
+    navigation.navigate('Home');
   };
 
   return (
     <ScrollView contentContainerStyle={styles.homePageScrn}>
       <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
-        <Text style={styles.logoutBtnTxt}>Logout</Text>
+        <Text style={styles.logoutBtnTxt}>Go Back</Text>
       </TouchableOpacity>
       <Text style={styles.home}>Inventory</Text>
       <View style={styles.box}></View>
