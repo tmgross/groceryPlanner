@@ -1,19 +1,20 @@
 import React from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
-import { useNavigation } from '@react-navigation/native';
 
-function HomeScreen() {
-  const navigation = useNavigation();
-
+function HomeScreen({ navigation }) {
   const handleLogout = () => {
-    // Navigate to the "Login" screen
     navigation.navigate('Login');
   };
 
   const handleBoxPress = boxNumber => {
-    // Replace 'YourOtherPage' with the name of the page you want to navigate to
-    navigation.navigate('YourOtherPage', { boxNumber });
+    if (boxNumber == 1) {
+      navigation.navigate('Inventory');
+    } else if (boxNumber == 2) {
+      navigation.navigate('Recipes');
+    } else {
+      navigation.navigate('Planner');
+    }
   };
 
   return (

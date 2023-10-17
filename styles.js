@@ -23,15 +23,16 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     fontSize: 20,
     top: 20,
+    height: 30,
   },
   box: {
     width: '90%',
-    height: 200,
+    flex: 1/3,
     backgroundColor: '#dcdcdc',
-    marginVertical: 20,
+    marginVertical: 15,
   },
   boxText: {
-    fontFamily: "'Trebuchet MS', Helvetica, sans-serif",
+    fontFamily: "'Trebuchet MS', Helvetica, sans-serif", //FIX THIS SO IT USES THE FONT
     fontSize: 18,
    },
   boxButton: {

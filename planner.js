@@ -17,9 +17,6 @@ function PlannerScreen() {
         <Text style={styles.logoutBtnTxt}>Go Back</Text>
       </TouchableOpacity>
       <Text style={styles.header}>Planner</Text>
-      <View style={styles.box}></View>
-      <View style={styles.box}></View>
-      <View style={styles.box}></View>
     </ScrollView>
   );
 }

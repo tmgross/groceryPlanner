@@ -17,9 +17,6 @@ function InventoryScreen() {
         <Text style={styles.logoutBtnTxt}>Go Back</Text>
       </TouchableOpacity>
       <Text style={styles.header}>Inventory</Text>
-      <View style={styles.box}></View>
-      <View style={styles.box}></View>
-      <View style={styles.box}></View>
     </ScrollView>
   );
 }
