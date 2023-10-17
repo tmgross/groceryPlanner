@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     width: '90%',
     height: 200,
     backgroundColor: '#dcdcdc',
-    marginVertical: 10,
+    marginVertical: 20,
   },
   title: {
     color: 'white',
