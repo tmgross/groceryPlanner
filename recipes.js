@@ -7,7 +7,7 @@ function RecipeScreen() {
   const navigation = useNavigation();
 
   const handleLogout = () => {
-    // Navigate to the "Login" screen
+    // Navigate to the "Home" screen
     navigation.navigate('Home');
   };
 
@@ -16,7 +16,7 @@ function RecipeScreen() {
       <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
         <Text style={styles.logoutBtnTxt}>Go Back</Text>
       </TouchableOpacity>
-      <Text style={styles.home}>Recipes</Text>
+      <Text style={styles.header}>Recipes</Text>
       <View style={styles.box}></View>
       <View style={styles.box}></View>
       <View style={styles.box}></View>

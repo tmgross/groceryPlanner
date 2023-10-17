@@ -17,11 +17,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 50,
   },
-  home: {
+  header: {
     color: 'white',
-    fontSize: 16,
     fontWeight: 'bold',
     position: 'absolute',
+    fontSize: 20,
     top: 20,
   },
   box: {
@@ -30,10 +30,29 @@ export const styles = StyleSheet.create({
     backgroundColor: '#dcdcdc',
     marginVertical: 20,
   },
+  boxText: {
+    fontFamily: "'Trebuchet MS', Helvetica, sans-serif",
+    fontSize: 18,
+   },
+  boxButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    width: 30,
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: 'black',
+  },
+  boxButtonText: {
+    color: 'white',
+  },
   title: {
     color: 'white',
     fontSize: 24,
     marginBottom: 20,
+    
   },
   loginContainer: {
     display: 'flex',

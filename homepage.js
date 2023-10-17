@@ -21,7 +21,7 @@ function HomeScreen() {
       <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
         <Text style={styles.logoutBtnTxt}>Logout</Text>
       </TouchableOpacity>
-      <Text style={styles.home}>Your Groceries</Text>
+      <Text style={styles.header}>Your Groceries</Text>
       <View style={styles.box}>
         <Text style={styles.boxText}>Box 1</Text>
         <TouchableOpacity
