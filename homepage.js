@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
+import { box_styles } from './boxStyles';
 
 function HomeScreen({ navigation }) {
   const handleLogout = () => {
@@ -23,30 +24,42 @@ function HomeScreen({ navigation }) {
         <Text style={styles.logoutBtnTxt}>Logout</Text>
       </TouchableOpacity>
       <Text style={styles.header}>Your Groceries</Text>
-      <View style={styles.box}>
-        <Text style={styles.boxText}>Box 1</Text>
+      <View style={box_styles.box}>
+        <View style={box_styles.boxHeaderContainer}>
+          <Text style={box_styles.boxHeader}>Inventory</Text>
+        </View>
         <TouchableOpacity
           onPress={() => handleBoxPress(1)}
-          style={styles.boxButton}>
-          <Text style={styles.boxButtonText}>Go</Text>
+          style={box_styles.boxButton}>
+          <Text style={box_styles.boxButtonText}>Go</Text>
         </TouchableOpacity>
+        <View style={box_styles.separator}></View>
       </View>
-      <View style={styles.box}>
-        <Text style={styles.boxText}>Box 2</Text>
+
+      <View style={box_styles.box}>
+        <View style={box_styles.boxHeaderContainer}>
+          <Text style={box_styles.boxHeader}>Recipes</Text>
+        </View>
         <TouchableOpacity
           onPress={() => handleBoxPress(2)}
-          style={styles.boxButton}>
-          <Text style={styles.boxButtonText}>Go</Text>
+          style={box_styles.boxButton}>
+          <Text style={box_styles.boxButtonText}>Go</Text>
         </TouchableOpacity>
+        <View style={box_styles.separator}></View>
       </View>
-      <View style={styles.box}>
-        <Text style={styles.boxText}>Box 3</Text>
+
+      <View style={box_styles.box}>
+        <View style={box_styles.boxHeaderContainer}>
+          <Text style={box_styles.boxHeader}>Planner</Text>
+        </View>
         <TouchableOpacity
           onPress={() => handleBoxPress(3)}
-          style={styles.boxButton}>
-          <Text style={styles.boxButtonText}>Go</Text>
+          style={box_styles.boxButton}>
+          <Text style={box_styles.boxButtonText}>Go</Text>
         </TouchableOpacity>
+        <View style={box_styles.separator}></View>
       </View>
+
     </ScrollView>
   );
 }

@@ -25,30 +25,6 @@ export const styles = StyleSheet.create({
     top: 20,
     height: 30,
   },
-  box: {
-    width: '90%',
-    flex: 1/3,
-    backgroundColor: '#dcdcdc',
-    marginVertical: 15,
-  },
-  boxText: {
-    fontFamily: "'Trebuchet MS', Helvetica, sans-serif", //FIX THIS SO IT USES THE FONT
-    fontSize: 18,
-   },
-  boxButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    width: 30,
-    alignItems: 'center',
-    borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    backgroundColor: 'black',
-  },
-  boxButtonText: {
-    color: 'white',
-  },
   title: {
     color: 'white',
     fontSize: 24,
