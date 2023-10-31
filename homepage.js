@@ -24,6 +24,7 @@ function HomeScreen({ navigation }) {
         <Text style={styles.logoutBtnTxt}>Logout</Text>
       </TouchableOpacity>
       <Text style={styles.header}>Your Groceries</Text>
+
       <View style={box_styles.box}>
         <View style={box_styles.boxHeaderContainer}>
           <Text style={box_styles.boxHeader}>Inventory</Text>
@@ -59,7 +60,6 @@ function HomeScreen({ navigation }) {
         </TouchableOpacity>
         <View style={box_styles.separator}></View>
       </View>
-
     </ScrollView>
   );
 }

@@ -9,6 +9,9 @@ function LoginScreen({ navigation }) {
   const handleGoogleLoginClick = () => {
     navigation.navigate('Home');
   };
+  const handleRegisterClick = () => {
+    navigation.navigate('Register');
+  };
 
   return (
     <View style={styles.loginScrn}>
@@ -40,6 +43,13 @@ function LoginScreen({ navigation }) {
           <TouchableOpacity style={[styles.loginBtn, styles.loginBtnMargin]}>
             <Text style={styles.buttonText} onPress={handleLoginClick}>
               Login
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity>
+            <Text onPress={handleRegisterClick}>
+              Don't have an account? Register here.
             </Text>
           </TouchableOpacity>
         </View>

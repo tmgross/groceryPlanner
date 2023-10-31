@@ -6,6 +6,7 @@ import LoginScreen from './login';
 import InventoryScreen from './inventory'
 import RecipeScreen from './recipes'
 import PlannerScreen from './planner'
+import SignUpScreen from './signup'
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ function App() {
         <Stack.Screen name="Inventory" component={InventoryScreen} />
         <Stack.Screen name="Recipes" component={RecipeScreen} />
         <Stack.Screen name="Planner" component={PlannerScreen} />
+        <Stack.Screen name="Register" component={SignUpScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
