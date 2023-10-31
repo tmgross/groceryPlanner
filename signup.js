@@ -14,6 +14,7 @@ function SignUpScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isValid, setValid] = useState(true);
+  
   const __doSignUp = () => {
     if (!email) {
       setError('Email required *');

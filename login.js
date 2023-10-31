@@ -1,16 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
+import auth from '@react-native-firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 function LoginScreen({ navigation }) {
-  const handleLoginClick = () => {
-    navigation.navigate('Home');
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isValid, setValid] = useState(true);
+  const [error, setError] = useState('');
+
   const handleGoogleLoginClick = () => {
     navigation.navigate('Home');
   };
   const handleRegisterClick = () => {
     navigation.navigate('Register');
+  };
+
+  const __doSignIn = async (email, password) => {
+    try {
+      if (!email || !password) {
+        console.error('Email and password are required.');
+        return;
+      }
+
+      let response = await auth().signInWithEmailAndPassword(email, password);
+      if (response && response.user) {
+        Alert.alert('Success ✅', 'Authenticated successfully');
+        navigation.navigate('Home');
+      } else {
+        console.error('Authentication failed.');
+      }
+    } catch (e) {
+      console.error('Authentication error:', e.message);
+    }
   };
 
   return (
@@ -20,19 +43,29 @@ function LoginScreen({ navigation }) {
         <View style={styles.inputRow}>
           <Text style={styles.loginTextBox}>Email:</Text>
           <TextInput
+            label={'Email'}
+            autoCapitalize={false}
+            keyboardType="email-address"
             style={styles.input}
-            placeholder="Enter your username"
-            placeholderTextColor="gray"
+            placeholder="Enter your email"
+            onChangeText={text => {
+              setEmail(text);
+            }}
+            error={isValid}
           />
         </View>
 
         <View style={styles.inputRow}>
           <Text style={styles.loginTextBox}>Password:</Text>
           <TextInput
+            label={'Password'}
+            secureTextEntry
+            autoCapitalize={false}
             style={styles.input}
+            selectionColor={'blue'}
             placeholder="Enter your password"
-            placeholderTextColor="gray"
-            secureTextEntry={true}
+            error={isValid}
+            onChangeText={text => setPassword(text)}
           />
         </View>
 
@@ -43,7 +76,7 @@ function LoginScreen({ navigation }) {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.loginBtn, styles.loginBtnMargin]}>
-            <Text style={styles.buttonText} onPress={handleLoginClick}>
+            <Text style={styles.buttonText} onPress={__doSignIn}>
               Login
             </Text>
           </TouchableOpacity>
