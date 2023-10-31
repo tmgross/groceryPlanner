@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, SafeAreaView, TouchableHighlight, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { styles } from './styles';
 import auth from '@react-native-firebase/auth';
 
 function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fetching, setFetching] = useState(false);
   const [error, setError] = useState('');
   const [isValid, setValid] = useState(true);
   const __doSignUp = () => {
@@ -20,7 +25,7 @@ function SignUpScreen({ navigation }) {
       setValid(false);
       return;
     }
-    //  else if (!__isValidEmail(email)) { 
+    //  else if (!__isValidEmail(email)) {
     //   setError('Invalid Email');
     //   setValid(false);
     //   return;
@@ -37,6 +42,7 @@ function SignUpScreen({ navigation }) {
       );
       if (response && response.user) {
         Alert.alert('Success ✅', 'Account created successfully');
+        navigation.navigate('Login');
       }
     } catch (e) {
       console.error(e.message);
@@ -44,60 +50,53 @@ function SignUpScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.containerStyle}>
-      <View style={{ flex: 0.2 }}>
-        {!!fetching && <ActivityIndicator color={blue} />}
-      </View>
-      <View style={styles.headerContainerStyle}>
-        <Text style={styles.headerTitleStyle}> Sign Up </Text>
-      </View>
-      <View style={styles.formContainerStyle}>
-        <TextInput
-          label={'Email'}
-          autoCapitalize={false}
-          keyboardType="email-address"
-          style={styles.textInputStyle}
-          placeholder="Mail address"
-          onChangeText={text => {
-            setError;
-            setEmail(text);
-          }}
-          error={isValid}
-        />
+    <View style={styles.loginScrn}>
+      <Text style={styles.title}>Grocery Planner</Text>
+      <Text style={styles.subTitle}>Create an Account</Text>
 
-        <TextInput
-          label={'Password'}
-          secureTextEntry
-          autoCapitalize={false}
-          style={styles.textInputStyle}
-          selectionColor={'blue'}
-          placeholder="Password"
-          error={isValid}
-          onChangeText={text => setPassword(text)}
-        />
-      </View>
-      {error ? (
-        <View style={styles.errorLabelContainerStyle}>
-          <Text style={styles.errorTextStyle}>{error}</Text>
+      <View style={styles.loginContainer}>
+        <View style={styles.inputRow}>
+          <Text style={styles.loginTextBox}>Email:</Text>
+          <TextInput
+            label={'Email'}
+            autoCapitalize={false}
+            keyboardType="email-address"
+            style={styles.input}
+            placeholder="Enter your email"
+            onChangeText={text => {
+              setError;
+              setEmail(text);
+            }}
+            error={isValid}
+          />
         </View>
-      ) : null}
-      <View style={styles.signInButtonContainerStyle}>
-        <TouchableHighlight
-          style={styles.signInButtonStyle}
-          onPress={__doSignUp}
-          underlayColor={'blue'}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}>
-            <Text style={styles.signInButtonTextStyle}>Continue</Text>
-          </View>
-        </TouchableHighlight>
+
+        <View style={styles.inputRow}>
+          <Text style={styles.loginTextBox}>Password:</Text>
+          <TextInput
+            label={'Password'}
+            secureTextEntry
+            autoCapitalize={false}
+            style={styles.input}
+            selectionColor={'blue'}
+            placeholder="Enter your password"
+            error={isValid}
+            onChangeText={text => setPassword(text)}
+          />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={[styles.loginBtn, styles.loginBtnMargin]}>
+            <Text style={styles.buttonText} onPress={__doSignUp}>
+              Continue
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
+
 // Set the screen options to remove the header
 SignUpScreen.navigationOptions = {
   headerShown: false,

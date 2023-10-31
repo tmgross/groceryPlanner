@@ -31,6 +31,12 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     
   },
+  subTitle: {
+    color: 'white',
+    fontSize: 16,
+    marginBottom: 20,
+    
+  },
   loginContainer: {
     display: 'flex',
     flexDirection: 'column',
