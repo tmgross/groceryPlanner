@@ -7,7 +7,6 @@ function PlannerScreen() {
   const navigation = useNavigation();
 
   const handleLogout = () => {
-    // Navigate to the "Home" screen
     navigation.navigate('Home');
   };
 
