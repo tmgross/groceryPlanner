@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { styles } from './styles';
 import auth from '@react-native-firebase/auth';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
@@ -44,14 +44,14 @@ function LoginScreen({ navigation }) {
           <Text style={styles.loginTextBox}>Email:</Text>
           <TextInput
             label={'Email'}
-            autoCapitalize={false}
+            autoCapitalize="none"
             keyboardType="email-address"
             style={styles.input}
             placeholder="Enter your email"
+            error={!email}
             onChangeText={text => {
               setEmail(text);
             }}
-            error={isValid}
           />
         </View>
 
@@ -60,12 +60,14 @@ function LoginScreen({ navigation }) {
           <TextInput
             label={'Password'}
             secureTextEntry
-            autoCapitalize={false}
+            autoCapitalize="none"
             style={styles.input}
             selectionColor={'blue'}
             placeholder="Enter your password"
-            error={isValid}
-            onChangeText={text => setPassword(text)}
+            error={!password}
+            onChangeText={text => {
+              setPassword(text);
+            }}
           />
         </View>
 
@@ -76,7 +78,7 @@ function LoginScreen({ navigation }) {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.loginBtn, styles.loginBtnMargin]}>
-            <Text style={styles.buttonText} onPress={__doSignIn}>
+            <Text style={styles.buttonText} onPress={() => __doSignIn(email, password)}>
               Login
             </Text>
           </TouchableOpacity>
