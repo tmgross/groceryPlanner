@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { box_styles } from './boxStyles';
+import auth from '@react-native-firebase/auth';
 
 function HomeScreen({ navigation }) {
-  const handleLogout = () => {
-    navigation.navigate('Login');
+  const [userEmail, setUserEmail] = useState('');
+
+  useEffect(() => {
+    // Fetch user information when the component mounts
+    const currentUser = auth().currentUser;
+    if (currentUser) {
+      setUserEmail(currentUser.email);
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await auth().signOut(); // Sign the user out
+      navigation.navigate('Login'); // Navigate to the login screen
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   const handleBoxPress = boxNumber => {
@@ -23,7 +39,7 @@ function HomeScreen({ navigation }) {
       <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
         <Text style={styles.logoutBtnTxt}>Logout</Text>
       </TouchableOpacity>
-      <Text style={styles.header}>Your Groceries</Text>
+      <Text style={styles.header}>Your Groceries {userEmail}</Text>
 
       <View style={box_styles.box}>
         <View style={box_styles.boxHeaderContainer}>
