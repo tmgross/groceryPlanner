@@ -2,14 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { box_styles } from './boxStyles';
+import { modal_styles } from './modalStyles';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import Modal from 'react-native-modal';
 
 function RecipeScreen() {
   const navigation = useNavigation();
   const [recipes, setRecipes] = useState([]);
   const [numRecipes, setNumRecipes] = useState(0);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
+  const openModal = recipe => {
+    setSelectedRecipe(recipe);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setSelectedRecipe(null);
+    setModalVisible(false);
+  };
 
   const handleLogout = () => {
     navigation.navigate('Home');
@@ -17,11 +31,9 @@ function RecipeScreen() {
 
   useEffect(() => {
     // Fetch the 'recipes' collection from Firestore
-
     const recipeRef = firestore()
       .collection('recipes')
-      .get()
-      .then(querySnapshot => {
+      .onSnapshot(querySnapshot => {
         const recipeData = [];
         // console.log('Total recipes: ', querySnapshot.size);
 
@@ -35,6 +47,7 @@ function RecipeScreen() {
       });
 
     return () => {
+      // Unsubscribe from the Firestore subscription when the component unmounts
       recipeRef();
     };
   }, []);
@@ -59,9 +72,32 @@ function RecipeScreen() {
         </TouchableOpacity>
         <View style={box_styles.separator}></View>
         {recipes.map(recipe => (
-          <Text key={recipe.id}>{recipe.Description}</Text>
+          <TouchableOpacity key={recipe.id} onPress={() => openModal(recipe)}>
+            <Text style={box_styles.boxListItem}>{recipe.Description}</Text>
+          </TouchableOpacity>
         ))}
       </View>
+
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={closeModal}
+        animationIn="slideInUp"
+        animationOut="slideOutDown">
+        <View style={modal_styles.modalContainer}>
+          {selectedRecipe && (
+            <View>
+              <Text style={modal_styles.modalTitle}>{selectedRecipe.Description}</Text>
+              <Text>{selectedRecipe.Description}</Text>
+              {/* Add more recipe information here */}
+            </View>
+          )}
+          <TouchableOpacity
+            onPress={closeModal}
+            style={modal_styles.closeModalButton}>
+            <Text style={modal_styles.closeModalButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }

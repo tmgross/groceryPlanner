@@ -33,6 +33,10 @@ export const box_styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'black',
   },
+  itemSeparator: {
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
   boxButton: {
     position: 'absolute',
     top: 10,
@@ -59,4 +63,8 @@ export const box_styles = StyleSheet.create({
   boxButtonText: {
     color: 'white',
   },
+  boxListItem: {
+    paddingTop: 10,
+    fontSize: 18,
+  }
 });
