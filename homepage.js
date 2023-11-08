@@ -3,6 +3,7 @@ import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { box_styles } from './boxStyles';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 function HomeScreen({ navigation }) {
   const [userEmail, setUserEmail] = useState('');
@@ -10,15 +11,28 @@ function HomeScreen({ navigation }) {
   useEffect(() => {
     // Fetch user information when the component mounts
     const currentUser = auth().currentUser;
-    if (currentUser) {
-      setUserEmail(currentUser.email);
-    }
+    setUserEmail(currentUser.email);
+    // if (currentUser) {
+
+    //   // Update the 'test' field in the userInformation subcollection document
+    //   const userInformationRef = firestore()
+    //     .collection('userInformation')
+    //     .doc(currentUser.email); // Assuming 'email' is the document ID
+    //   userInformationRef
+    //     .update({ test: true })
+    //     .then(() => {
+    //       console.log('Subcollection document updated with test: true');
+    //     })
+    //     .catch(error => {
+    //       console.error('Error updating subcollection document:', error);
+    //     });
+    // }
   }, []);
 
   const handleLogout = async () => {
     try {
-      await auth().signOut(); // Sign the user out
-      navigation.navigate('Login'); // Navigate to the login screen
+      await auth().signOut();
+      navigation.navigate('Login');
     } catch (error) {
       console.error('Error logging out:', error);
     }

@@ -89,7 +89,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   logoutBtn: {
-    backgroundColor: '#ed5440',
+    backgroundColor: 'red',
     padding: 10,
     borderRadius: 5,
     position: 'absolute',

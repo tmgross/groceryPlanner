@@ -71,12 +71,30 @@ function RecipeScreen() {
           <Text style={box_styles.boxButtonText}>Create New Recipe</Text>
         </TouchableOpacity>
         <View style={box_styles.separator}></View>
-        {recipes.map(recipe => (
-          <TouchableOpacity key={recipe.id} onPress={() => openModal(recipe)}>
-            <Text style={box_styles.boxListItem}>{recipe.Description}</Text>
-          </TouchableOpacity>
+        {recipes.map((recipe, index) => (
+          <View key={recipe.id}>
+            <TouchableOpacity onPress={() => openModal(recipe)}>
+              <Text style={box_styles.boxListItem}>{recipe.Description}</Text>
+            </TouchableOpacity>
+            {index < recipes.length && (
+              <View style={box_styles.itemSeparator}></View>
+            )}
+          </View>
         ))}
       </View>
+
+      {/* {recipes.map((recipe) => (
+  <View key={recipe.id} style={box_styles.recipeItemContainer}>
+    <TouchableOpacity onPress={() => openModal(recipe)}>
+      <View style={box_styles.recipeItemContent}>
+        {recipe.image && (
+          <Image source={{ uri: recipe.image }} style={box_styles.recipeImage} />
+        )}
+        <Text style={box_styles.boxListItem}>{recipe.Description}</Text>
+      </View>
+    </TouchableOpacity>
+  </View>
+))} */}
 
       <Modal
         isVisible={isModalVisible}
@@ -86,8 +104,20 @@ function RecipeScreen() {
         <View style={modal_styles.modalContainer}>
           {selectedRecipe && (
             <View>
-              <Text style={modal_styles.modalTitle}>{selectedRecipe.Description}</Text>
-              <Text>{selectedRecipe.Description}</Text>
+              <Text style={modal_styles.modalTitle}>
+                {selectedRecipe.Description}
+              </Text>
+              <View>
+                <Text style={styles.modalTitle}>Ingredients</Text>
+                <Text>
+                  {selectedRecipe.ingredients.map((ingredient, index) => (
+                    <Text key={index}>
+                      {`\u2022 ${ingredient}`}
+                      {'\n'}
+                    </Text>
+                  ))}
+                </Text>
+              </View>
               {/* Add more recipe information here */}
             </View>
           )}

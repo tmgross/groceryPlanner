@@ -66,5 +66,21 @@ export const box_styles = StyleSheet.create({
   boxListItem: {
     paddingTop: 10,
     fontSize: 18,
-  }
+  },
+  recipeImage: {
+    width: 50, 
+    height: 50,
+    marginRight: 10,
+    borderRadius: 5,
+  },
+  recipeItemContainer: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+  },
+  recipeItemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });

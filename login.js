@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import auth from '@react-native-firebase/auth';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
@@ -26,7 +26,6 @@ function LoginScreen({ navigation }) {
 
       let response = await auth().signInWithEmailAndPassword(email, password);
       if (response && response.user) {
-        Alert.alert('Success ✅', 'Authenticated successfully');
         navigation.navigate('Home');
       } else {
         console.error('Authentication failed.');
