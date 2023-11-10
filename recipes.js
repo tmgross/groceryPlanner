@@ -6,9 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { styles } from './styles';
-import { box_styles } from './boxStyles';
-import { modal_styles } from './modalStyles';
+import { styles, box_styles, modal_styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -37,8 +35,7 @@ function RecipeScreen() {
     setModalVisible(false);
   };
 
-  const handleCreateNew = () => {
-  };
+  const handleCreateNew = () => {};
 
   const openCreateModal = () => {
     setCreateModalVisible(true);
@@ -180,7 +177,9 @@ function RecipeScreen() {
                 <View key={index} style={modal_styles.ingredientsContainer}>
                   <Text>{`${index + 1}. ${ingredient}`}</Text>
                   <TouchableOpacity onPress={() => removeIngredient(index)}>
-                    <Text style={modal_styles.removeIngredient}>Remove Ingredient</Text>
+                    <Text style={modal_styles.removeIngredient}>
+                      Remove Ingredient
+                    </Text>
                   </TouchableOpacity>
                 </View>
               ))}
