@@ -29,13 +29,11 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 24,
     marginBottom: 20,
-    
   },
   subTitle: {
     color: 'white',
     fontSize: 16,
     marginBottom: 20,
-    
   },
   loginContainer: {
     display: 'flex',
@@ -172,13 +170,13 @@ export const box_styles = StyleSheet.create({
     fontSize: 18,
   },
   recipeImage: {
-    width: 50, 
+    width: 50,
     height: 50,
     marginRight: 10,
     borderRadius: 5,
   },
   recipeItemContainer: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: 5,
@@ -233,15 +231,6 @@ export const modal_styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
-  removeIngredient: {
-    backgroundColor: '#DA043C',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
-    marginBottom: 10,
-    width: '100%',
-    textAlign: 'center',
-  },
   addIngredient: {
     backgroundColor: '#0185BE',
     color: 'white',
@@ -252,7 +241,19 @@ export const modal_styles = StyleSheet.create({
     textAlign: 'center',
   },
   ingredientsContainer: {
-    fontSize: 12,
-    textAlign: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  ingredientItem: {
+    flex: 1,
+  },
+  removeIngredient: {
+    backgroundColor: 'red',
+    color: 'white',
+    padding: 3,
+    borderRadius: 5,
+    marginLeft: 8,
   },
 });

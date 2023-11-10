@@ -22,6 +22,7 @@ function RecipeScreen() {
   const [isCreateModalVisible, setCreateModalVisible] = useState(false);
 
   const [recipeName, setRecipeName] = useState('');
+  const [recipeDescription, setRecipeDecsription] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const [ingredientInput, setIngredientInput] = useState('');
 
@@ -35,7 +36,25 @@ function RecipeScreen() {
     setModalVisible(false);
   };
 
-  const handleCreateNew = () => {};
+  const handleCreateNew = async () => {
+    try {
+      if (!recipeName.trim() || ingredients.length === 0) {
+        console.log('Recipe name and ingredients are required.');
+        return;
+      }
+      const recipesRef = firestore().collection('recipes');
+      const newRecipeRef = recipesRef.doc(recipeName);
+
+      await newRecipeRef.set({
+        description: recipeDescription,
+        ingredients: ingredients,
+      });
+
+      closeCreateModal();
+    } catch (error) {
+      console.error('Error creating recipe:', error);
+    }
+  };
 
   const openCreateModal = () => {
     setCreateModalVisible(true);
@@ -64,24 +83,23 @@ function RecipeScreen() {
 
   useEffect(() => {
     // Fetch the 'recipes' collection from Firestore
-    const recipeRef = firestore()
-      .collection('recipes')
-      .onSnapshot(querySnapshot => {
-        const recipeData = [];
-        // console.log('Total recipes: ', querySnapshot.size);
+    const recipeRef = firestore().collection('recipes');
 
-        querySnapshot.forEach(documentSnapshot => {
-          recipeData.push({
-            id: documentSnapshot.id,
-            ...documentSnapshot.data(),
-          });
+    // Subscribe to real-time updates with onSnapshot
+    const unsubscribe = recipeRef.onSnapshot(querySnapshot => {
+      const recipeData = [];
+      querySnapshot.forEach(documentSnapshot => {
+        recipeData.push({
+          id: documentSnapshot.id,
+          ...documentSnapshot.data(),
         });
-        setRecipes(recipeData);
       });
+      setRecipes(recipeData);
+    });
 
+    // Unsubscribe from the Firestore subscription when the component unmounts
     return () => {
-      // Unsubscribe from the Firestore subscription when the component unmounts
-      recipeRef();
+      unsubscribe();
     };
   }, []);
 
@@ -105,7 +123,7 @@ function RecipeScreen() {
         {recipes.map((recipe, index) => (
           <View key={recipe.id}>
             <TouchableOpacity onPress={() => openRecipeModal(recipe)}>
-              <Text style={box_styles.boxListItem}>{recipe.Description}</Text>
+              <Text style={box_styles.boxListItem}>{recipe.id}</Text>
             </TouchableOpacity>
             {index < recipes.length && (
               <View style={box_styles.itemSeparator}></View>
@@ -123,7 +141,7 @@ function RecipeScreen() {
           {selectedRecipe && (
             <View>
               <Text style={modal_styles.modalTitle}>
-                {selectedRecipe.Description}
+                {selectedRecipe.description}
               </Text>
               <View>
                 <Text style={styles.modalTitle}>Ingredients</Text>
@@ -172,10 +190,22 @@ function RecipeScreen() {
             </View>
 
             <View>
+              <Text style={modal_styles.modalHeader}>Description:</Text>
+              <TextInput
+                style={modal_styles.input}
+                value={recipeDescription}
+                onChangeText={text => setRecipeDecsription(text)}
+                placeholder="Enter recipe description"
+              />
+            </View>
+
+            <View>
               <Text style={modal_styles.modalHeader}>Ingredients:</Text>
               {ingredients.map((ingredient, index) => (
                 <View key={index} style={modal_styles.ingredientsContainer}>
-                  <Text>{`${index + 1}. ${ingredient}`}</Text>
+                  <View style={modal_styles.ingredientItem}>
+                    <Text>{`${index + 1}. ${ingredient}`}</Text>
+                  </View>
                   <TouchableOpacity onPress={() => removeIngredient(index)}>
                     <Text style={modal_styles.removeIngredient}>
                       Remove Ingredient
@@ -183,6 +213,7 @@ function RecipeScreen() {
                   </TouchableOpacity>
                 </View>
               ))}
+
               <View style={modal_styles.addIngredientContainer}>
                 <TextInput
                   style={modal_styles.input}
