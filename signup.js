@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { styles } from './styles';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isValid, setValid] = useState(true);
-  
+
   const __doSignUp = () => {
     if (!email) {
       setError('Email required *');
@@ -41,12 +36,21 @@ function SignUpScreen({ navigation }) {
         email,
         password,
       );
+
       if (response && response.user) {
+        // The user has been successfully created
+        await firestore()
+          .collection('user_information')
+          .doc(response.user.uid)
+          .set({
+            test: email,
+          });
+
         Alert.alert('Success ✅', 'Account created successfully');
         navigation.navigate('Login');
       }
-    } catch (e) {
-      console.error(e.message);
+    } catch (error) {
+      console.error(error.message);
     }
   };
 

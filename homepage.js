@@ -11,21 +11,6 @@ function HomeScreen({ navigation }) {
     // Fetch user information when the component mounts
     const currentUser = auth().currentUser;
     setUserEmail(currentUser.email);
-    // if (currentUser) {
-
-    //   // Update the 'test' field in the userInformation subcollection document
-    //   const userInformationRef = firestore()
-    //     .collection('userInformation')
-    //     .doc(currentUser.email); // Assuming 'email' is the document ID
-    //   userInformationRef
-    //     .update({ test: true })
-    //     .then(() => {
-    //       console.log('Subcollection document updated with test: true');
-    //     })
-    //     .catch(error => {
-    //       console.error('Error updating subcollection document:', error);
-    //     });
-    // }
   }, []);
 
   const handleLogout = async () => {
