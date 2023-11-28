@@ -9,7 +9,24 @@ import Modal from 'react-native-modal';
 function InventoryScreen() {
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isItemModalVisible, setItemModalVisible] = useState(false);
   const [ingredients, setIngredients] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedCount, setSelectedCount] = useState(null);
+
+  const openItemModal = (item, count) => {
+    console.log(item);
+    console.log(count);
+    setSelectedItem(item);
+    setSelectedCount(count);
+    setItemModalVisible(true);
+  };
+
+  const closeItemModal = () => {
+    setSelectedItem(null);
+    setSelectedCount(null);
+    setItemModalVisible(false);
+  };
 
   const openAddModal = () => {
     setModalVisible(true);
@@ -71,7 +88,9 @@ function InventoryScreen() {
         <View style={box_styles.separator}></View>
         <View>
           {Object.entries(ingredients).map(([key, value], index) => (
-            <TouchableOpacity key={index}>
+            <TouchableOpacity
+              key={index}
+              onPress={() => openItemModal(key, value)}>
               <Text style={box_styles.boxListItem}>{`${key}: ${value}`}</Text>
             </TouchableOpacity>
           ))}
@@ -91,6 +110,28 @@ function InventoryScreen() {
             style={modal_styles.closeModalButton}>
             <Text style={modal_styles.closeModalButtonText}>Close</Text>
           </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        isVisible={isItemModalVisible}
+        onBackdropPress={closeItemModal}
+        animationIn="slideInUp"
+        animationOut="slideOutDown">
+        <View style={modal_styles.modalContainer}>
+          {selectedItem && (
+            <View>
+              <Text
+                style={
+                  modal_styles.modalTitle
+                }>{`${selectedItem}: ${selectedCount}`}</Text>
+              <TouchableOpacity
+                onPress={closeItemModal}
+                style={modal_styles.closeModalButton}>
+                <Text style={modal_styles.closeModalButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </Modal>
     </ScrollView>
