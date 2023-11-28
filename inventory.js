@@ -23,8 +23,6 @@ function InventoryScreen() {
   const [ingredientQuantity, setIngredientQuantity] = useState('');
 
   const openItemModal = (item, count) => {
-    console.log(item);
-    console.log(count);
     setSelectedItem(item);
     setSelectedCount(count);
     setItemModalVisible(true);

@@ -37,8 +37,8 @@ function HomeScreen({ navigation }) {
       <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
         <Text style={styles.logoutBtnTxt}>Logout</Text>
       </TouchableOpacity>
-      <Text style={styles.header}>Your Groceries {userEmail}</Text>
-
+      <Text style={styles.header}>{userEmail}</Text>
+{/* Your Groceries  */}
       <View style={box_styles.box}>
         <View style={box_styles.boxHeaderContainer}>
           <Text style={box_styles.boxHeader}>Inventory</Text>
