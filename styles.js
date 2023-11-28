@@ -256,4 +256,23 @@ export const modal_styles = StyleSheet.create({
     borderRadius: 5,
     marginLeft: 8,
   },
+  incrementButton: {
+    backgroundColor: '#eee',
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    margin: 5,
+    transform: [{ rotate: '180deg' }],
+  },
+  decrementButton: {
+    backgroundColor: '#eee',
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    margin: 5,
+  },
 });

@@ -40,6 +40,34 @@ function InventoryScreen() {
     navigation.navigate('Home');
   };
 
+  const decrementCount = () => {
+    setSelectedCount(prevCount => Math.max(0, prevCount - 1));
+  };
+
+  const incrementCount = () => {
+    setSelectedCount(prevCount => prevCount + 1);
+  };
+
+  const saveCount = () => {
+    const currentUser = auth().currentUser;
+    const userUID = currentUser.uid;
+
+    // Update the count in the database for the selected item
+    firestore()
+      .collection('user_information')
+      .doc(userUID)
+      .update({
+        [selectedItem]: selectedCount,
+      })
+      .then(() => {
+        console.log('Count updated successfully in the database');
+        closeItemModal(); // Close the modal after saving
+      })
+      .catch(error => {
+        console.error('Error updating count in the database: ', error);
+      });
+  };
+
   useEffect(() => {
     const currentUser = auth().currentUser;
     const userUID = currentUser.uid;
@@ -125,10 +153,27 @@ function InventoryScreen() {
                 style={
                   modal_styles.modalTitle
                 }>{`${selectedItem}: ${selectedCount}`}</Text>
+              <View style={modal_styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={incrementCount}
+                  style={modal_styles.incrementButton}>
+                  <Text style={modal_styles.buttonText}>▼</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={decrementCount}
+                  style={modal_styles.decrementButton}>
+                  <Text style={modal_styles.buttonText}>▼</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                onPress={saveCount}
+                style={modal_styles.acceptModalButton}>
+                <Text style={modal_styles.acceptModalButtonText}>Save</Text>
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={closeItemModal}
                 style={modal_styles.closeModalButton}>
-                <Text style={modal_styles.closeModalButtonText}>Close</Text>
+                <Text style={modal_styles.closeModalButtonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
           )}
