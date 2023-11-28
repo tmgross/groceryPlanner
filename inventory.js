@@ -24,7 +24,6 @@ function InventoryScreen() {
   };
 
   useEffect(() => {
-
     const currentUser = auth().currentUser;
     const userUID = currentUser.uid;
 
@@ -35,17 +34,18 @@ function InventoryScreen() {
     const unsubscribe = userDocRef.onSnapshot(documentSnapshot => {
       if (documentSnapshot.exists) {
         const userData = documentSnapshot.data();
-    
-        if (userData) { // Check if userData exists and is not null/undefined
+
+        if (userData) {
+          // Check if userData exists and is not null/undefined
           setIngredients(userData);
         } else {
-          console.log("User document data is empty");
+          console.log('User document data is empty');
         }
       } else {
-        console.log("User document does not exist");
+        console.log('User document does not exist');
       }
     });
-    
+
     // Unsubscribe from the Firestore subscription when the component unmounts
     return () => {
       unsubscribe();
@@ -69,19 +69,13 @@ function InventoryScreen() {
           <Text style={box_styles.boxButtonText}>Add Ingredient</Text>
         </TouchableOpacity>
         <View style={box_styles.separator}></View>
-        {/* {ingredients.map((userData, index) => (
-          <View key={index}>
-            {Object.keys(userData).map((key) => (
-              <TouchableOpacity key={key}>
-                <Text style={box_styles.boxListItem}>{userData[key]}</Text>
-              </TouchableOpacity>
-            ))}
-            {index < ingredients.length - 1 && (
-              <View style={box_styles.itemSeparator}></View>
-            )}
-          </View>
-        ))} */}
-
+        <View>
+          {Object.entries(ingredients).map(([key, value], index) => (
+            <TouchableOpacity key={index}>
+              <Text style={box_styles.boxListItem}>{`${key}: ${value}`}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
       <Modal
