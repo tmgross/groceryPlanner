@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import { styles, box_styles, modal_styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
@@ -13,6 +19,8 @@ function InventoryScreen() {
   const [ingredients, setIngredients] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedCount, setSelectedCount] = useState(null);
+  const [ingredientName, setIngredientName] = useState('');
+  const [ingredientQuantity, setIngredientQuantity] = useState('');
 
   const openItemModal = (item, count) => {
     console.log(item);
@@ -65,6 +73,31 @@ function InventoryScreen() {
       })
       .catch(error => {
         console.error('Error updating count in the database: ', error);
+      });
+  };
+
+  const addIngredient = () => {
+    const currentUser = auth().currentUser;
+    const userUID = currentUser.uid;
+
+    // Construct an object with the ingredient name and quantity
+    const ingredientData = {
+      [ingredientName]: Number(ingredientQuantity) || 0, // Ensure quantity is a number
+    };
+
+    const updateObj = {};
+    updateObj[ingredientName] = Number(ingredientQuantity) || 0;
+    // Update the ingredients in the database for the user
+    firestore()
+      .collection('user_information')
+      .doc(userUID)
+      .update(updateObj)
+      .then(() => {
+        console.log('Ingredient added successfully to the database');
+        closeAddModal(); // Close the modal after adding the ingredient
+      })
+      .catch(error => {
+        console.error('Error adding ingredient to the database: ', error);
       });
   };
 
@@ -132,6 +165,26 @@ function InventoryScreen() {
         animationOut="slideOutDown">
         <View style={modal_styles.modalContainer}>
           <Text>placeholder</Text>
+
+          <TextInput
+            style={modal_styles.input}
+            placeholder="Ingredient Name"
+            value={ingredientName}
+            onChangeText={text => setIngredientName(text)}
+          />
+          <TextInput
+            style={modal_styles.input}
+            placeholder="Quantity"
+            value={ingredientQuantity}
+            onChangeText={text => setIngredientQuantity(text)}
+            keyboardType="numeric"
+          />
+
+          <TouchableOpacity
+            onPress={addIngredient}
+            style={modal_styles.acceptModalButton}>
+            <Text style={modal_styles.acceptModalButtonText}>Add</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={closeAddModal}
