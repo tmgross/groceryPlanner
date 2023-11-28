@@ -43,7 +43,7 @@ function SignUpScreen({ navigation }) {
           .collection('user_information')
           .doc(response.user.uid)
           .set({
-            test: email,
+            potato: 10,
           });
 
         Alert.alert('Success ✅', 'Account created successfully');
