@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { styles, box_styles, modal_styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import Modal from 'react-native-modal';
 
 function InventoryScreen() {
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
-
+  const [ingredients, setIngredients] = useState([]);
 
   const openAddModal = () => {
     setModalVisible(true);
@@ -20,6 +22,35 @@ function InventoryScreen() {
   const handleLogout = () => {
     navigation.navigate('Home');
   };
+
+  useEffect(() => {
+
+    const currentUser = auth().currentUser;
+    const userUID = currentUser.uid;
+
+    // Reference the specific user document
+    const userDocRef = firestore().collection('user_information').doc(userUID);
+
+    // Subscribe to real-time updates with onSnapshot
+    const unsubscribe = userDocRef.onSnapshot(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        const userData = documentSnapshot.data();
+    
+        if (userData) { // Check if userData exists and is not null/undefined
+          setIngredients(userData);
+        } else {
+          console.log("User document data is empty");
+        }
+      } else {
+        console.log("User document does not exist");
+      }
+    });
+    
+    // Unsubscribe from the Firestore subscription when the component unmounts
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.homePageScrn}>
@@ -38,16 +69,19 @@ function InventoryScreen() {
           <Text style={box_styles.boxButtonText}>Add Ingredient</Text>
         </TouchableOpacity>
         <View style={box_styles.separator}></View>
-        {/* {recipes.map((recipe, index) => (
-          <View key={recipe.id}>
-            <TouchableOpacity onPress={() => openRecipeModal(recipe)}>
-              <Text style={box_styles.boxListItem}>{recipe.id}</Text>
-            </TouchableOpacity>
-            {index < recipes.length && (
+        {/* {ingredients.map((userData, index) => (
+          <View key={index}>
+            {Object.keys(userData).map((key) => (
+              <TouchableOpacity key={key}>
+                <Text style={box_styles.boxListItem}>{userData[key]}</Text>
+              </TouchableOpacity>
+            ))}
+            {index < ingredients.length - 1 && (
               <View style={box_styles.itemSeparator}></View>
             )}
           </View>
         ))} */}
+
       </View>
 
       <Modal
@@ -56,7 +90,7 @@ function InventoryScreen() {
         animationIn="slideInUp"
         animationOut="slideOutDown">
         <View style={modal_styles.modalContainer}>
-            <Text>placeholder</Text>
+          <Text>placeholder</Text>
 
           <TouchableOpacity
             onPress={closeAddModal}
@@ -65,7 +99,6 @@ function InventoryScreen() {
           </TouchableOpacity>
         </View>
       </Modal>
-
     </ScrollView>
   );
 }
