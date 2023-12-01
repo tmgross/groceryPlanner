@@ -25,6 +25,8 @@ function RecipeScreen() {
   const [recipeDescription, setRecipeDecsription] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const [ingredientInput, setIngredientInput] = useState('');
+  const [steps, setSteps] = useState([]);
+  const [stepInput, setStepInput] = useState('');
 
   const openRecipeModal = recipe => {
     setSelectedRecipe(recipe);
@@ -48,6 +50,7 @@ function RecipeScreen() {
       await newRecipeRef.set({
         description: recipeDescription,
         ingredients: ingredients,
+        steps: steps,
       });
 
       closeCreateModal();
@@ -79,6 +82,19 @@ function RecipeScreen() {
     const newIngredients = [...ingredients];
     newIngredients.splice(index, 1);
     setIngredients(newIngredients);
+  };
+
+  const addStep = () => {
+    if (stepInput !== '') {
+      setSteps([...steps, stepInput]);
+      setStepInput('');
+    }
+  };
+
+  const removeStep = index => {
+    const newSteps = [...steps];
+    newSteps.splice(index, 1);
+    setSteps(newSteps);
   };
 
   useEffect(() => {
@@ -159,7 +175,21 @@ function RecipeScreen() {
                   <Text>No ingredients provided</Text>
                 )}
               </View>
-              {/* Add more recipe information here */}
+              <View>
+                <Text style={styles.modalTitle}>Steps</Text>
+                {selectedRecipe.steps && selectedRecipe.steps.length > 0 ? (
+                  <Text>
+                    {selectedRecipe.steps.map((step, index) => (
+                      <Text key={index}>
+                        {`\u2022 ${step}`}
+                        {'\n'}
+                      </Text>
+                    ))}
+                  </Text>
+                ) : (
+                  <Text>No steps provided</Text>
+                )}
+              </View>
             </View>
           )}
           <TouchableOpacity
@@ -223,6 +253,34 @@ function RecipeScreen() {
                 />
                 <TouchableOpacity onPress={addIngredient}>
                   <Text style={modal_styles.addIngredient}>Add Ingredient</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View>
+              <Text style={modal_styles.modalHeader}>Steps:</Text>
+              {steps.map((step, index) => (
+                <View key={index} style={modal_styles.ingredientsContainer}>
+                  <View style={modal_styles.ingredientItem}>
+                    <Text>{`${index + 1}. ${step}`}</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => removeStep(index)}>
+                    <Text style={modal_styles.removeIngredient}>
+                      Remove Step
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+
+              <View style={modal_styles.addIngredientContainer}>
+                <TextInput
+                  style={modal_styles.input}
+                  value={stepInput}
+                  onChangeText={text => setStepInput(text)}
+                  placeholder="Enter Step"
+                />
+                <TouchableOpacity onPress={addStep}>
+                  <Text style={modal_styles.addIngredient}>Add Step</Text>
                 </TouchableOpacity>
               </View>
             </View>
